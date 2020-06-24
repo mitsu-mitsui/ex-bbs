@@ -8,6 +8,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.Domain.Article;
+import com.example.Domain.Comment;
+import com.example.Form.CommentForm;
 import com.example.Repository.ArticleRepository;
 import com.example.Repository.CommentRepository;
 
@@ -23,7 +25,11 @@ public class ArticleController {
 	private ArticleRepository articleRepository;
 	@Autowired
 	private CommentRepository commentRepository;
-
+	@Autowired
+	public CommentForm setupCommentForm() {
+		return new CommentForm();
+	}
+	
 	/**
 	 * 掲示板画面に遷移．
 	 * 
@@ -34,12 +40,12 @@ public class ArticleController {
 	public String index(Model model) {
 
 		List<Article> articleList = articleRepository.findAll();
-		
-		for(Article article:articleList) {
+
+		for (Article article : articleList) {
 			int nowArticleId = article.getId();
 			article.setCommentList(commentRepository.findByArticleId(nowArticleId));
 		}
-		
+
 		model.addAttribute("articleList", articleList);
 
 		return "article";
@@ -53,12 +59,31 @@ public class ArticleController {
 	 * @param content 投稿内容
 	 * @return 掲示板画面
 	 */
-	@RequestMapping("/insert")
-	public String insert(Model model, String name, String content) {
+	@RequestMapping("/insertArticle")
+	public String insertArticle(String name, String content) {
 
 		articleRepository.Insert(new Article(name, content));
 
-		return index(model);
+		return "redirect:/";
+	}
+
+	/**
+	 * コメントを投稿する．
+	 * 
+	 * @param form コメント投稿フォーム
+	 * @return 掲示板画面
+	 */
+	@RequestMapping("/insertComment")
+	public String insertComment(CommentForm form) {
+		Comment comment = new Comment();
+		
+		comment.setContent(form.getContent());
+		comment.setName(form.getName());
+		comment.setArticleId(Integer.parseInt(form.getArticleId()));
+		
+		commentRepository.insert(comment);
+		
+		return "redirect:/";
 	}
 
 }

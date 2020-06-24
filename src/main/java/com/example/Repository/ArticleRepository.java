@@ -43,7 +43,7 @@ public class ArticleRepository {
 	}
 
 	/**
-	 * 記事情報を挿入する．
+	 * 記事情報をDBに挿入する．
 	 * 
 	 * @param article 記事情報
 	 */

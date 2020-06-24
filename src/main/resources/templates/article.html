@@ -9,7 +9,7 @@
 <body>
 
 	<!-- 投稿フォーム -->
-	<form th:action="@{/insert}" th:method="post">
+	<form th:action="@{/insertArticle}" th:method="post">
 	投稿者名：<input name="name" type="text"><br>
 	投稿内容：<textarea name="content" rows="5" cols="30"></textarea><br><br>
 	<button type="submit">記事投稿</button>
@@ -32,6 +32,19 @@
 		
 		</div>
 		
+		<!-- コメント投稿欄 -->
+		------------------------<br>
+		<form th:action="@{/insertComment}" method="post">
+		<input name="articleId" type="hidden" th:value="${article.id}">
+		名前：<input name="name" type="text"><br>
+	    コメント：<br>
+	    <textarea name="content" rows="5" cols="30"></textarea><br>
+	    
+	    <button type="submit">コメント投稿</button>
+		
+		</form>
+		
+		<br>
 		<button type="button">記事削除</button>
 	</div>
 
