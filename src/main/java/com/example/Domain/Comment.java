@@ -1,51 +1,55 @@
 package com.example.Domain;
 
-import java.util.List;
-
 /**
- * 記事ドメイン.
+ * コメントドメイン．
  * 
  * @author yuiko.mitsui
  *
  */
-public class Article {
+/**
+ * @author yuiko.mitsui
+ *
+ */
+public class Comment {
 
 	/**
-	 * 記事ID．
+	 * コメントID．
 	 */
 	private Integer id;
 	/**
-	 * 投稿者名．
+	 * コメント投稿者名．
 	 */
 	private String name;
 	/**
-	 * 投稿内容．
+	 * コメント内容．
 	 */
 	private String content;
 	/**
-	 * 所持コメント．
+	 * コメント先の記事ID．
 	 */
-	private List<Comment> commentList;
+	private Integer articleId;
 
-	public Article(Integer id, String name, String content) {
+	public Comment(Integer id, String name, String content, Integer articleId) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.content = content;
+		this.articleId = articleId;
 	}
-
-	public Article( String name, String content) {
+	
+	public Comment(String name, String content, Integer articleId) {
 		super();
 		this.name = name;
 		this.content = content;
+		this.articleId = articleId;
 	}
 
-	public Article() {
+	public Comment() {
 	}
 
 	@Override
 	public String toString() {
-		return "Article [id=" + id + ", name=" + name + ", content=" + content + ", commentList=" + commentList + "]";
+		return "Comment [id=" + id + ", name=" + name + ", content=" + content + ", articleId=" + articleId + "]";
 	}
 
 	public Integer getId() {
@@ -72,12 +76,12 @@ public class Article {
 		this.content = content;
 	}
 
-	public List<Comment> getCommentList() {
-		return commentList;
+	public Integer getArticleId() {
+		return articleId;
 	}
 
-	public void setCommentList(List<Comment> commentList) {
-		this.commentList = commentList;
+	public void setArticleId(Integer articleId) {
+		this.articleId = articleId;
 	}
 
 }
