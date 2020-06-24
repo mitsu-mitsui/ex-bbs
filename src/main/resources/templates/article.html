@@ -8,13 +8,20 @@
 </head>
 <body>
 
-	<hr>
+	<!-- 投稿フォーム -->
+	<form th:action="@{/insert}" th:method="post">
+	投稿者名：<input name="name" type="text"><br>
+	投稿内容：<textarea name="content" rows="5" cols="30"></textarea><br><br>
+	<button>記事投稿</button>
+	</form>
+	
+
 	<div th:each=" article : ${articleList}">
 		<hr>
-		投稿者名：<span th:text="${article.name}">ななし</span><br> 
-		投稿内容：<br>
-		<pre th:text="${article.content}">hoge</pre><br>
-		
+		投稿者名：<span th:text="${article.name}">ななし</span><br> 投稿内容：<br>
+		<pre th:text="${article.content}">hoge</pre>
+		<br>
+
 		<button type="button">記事削除</button>
 	</div>
 

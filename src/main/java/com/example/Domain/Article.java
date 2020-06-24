@@ -27,6 +27,12 @@ public class Article {
 		this.name = name;
 		this.content = content;
 	}
+	
+	public Article( String name, String content) {
+		super();
+		this.name = name;
+		this.content = content;
+	}
 
 	public Article() {
 	}
