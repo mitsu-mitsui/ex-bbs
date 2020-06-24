@@ -1,5 +1,21 @@
 package com.example.Controller;
 
-public class ArticleController {
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.example.Repository.ArticleRepository;
+
+@Controller
+public class ArticleController {
+	@Autowired
+	private ArticleRepository articleRepository;
+	
+	@RequestMapping("")
+	public String index() {
+		return "article";
+	}
+	
+	
+	
 }
