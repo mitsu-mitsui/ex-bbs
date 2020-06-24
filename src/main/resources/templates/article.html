@@ -4,9 +4,19 @@
 <head>
 <meta charset="UTF-8">
 <link rel="stylesheet" href="XXXXXXXX.css">
-<title>Insert title here</title>
+<title>掲示板</title>
 </head>
 <body>
+
+	<hr>
+	<div th:each=" article : ${articleList}">
+		<hr>
+		投稿者名：<span th:text="${article.name}">ななし</span><br> 
+		投稿内容：<br>
+		<pre th:text="${article.content}">hoge</pre><br>
+		
+		<button type="button">記事削除</button>
+	</div>
 
 </body>
 </html>
