@@ -47,13 +47,15 @@ public class ArticleController {
 	@RequestMapping("")
 	public String index(Model model) {
 
-		List<Article> articleList = articleRepository.findAll();
+//		List<Article> articleList = articleRepository.findAll();
+//
+//		for (Article article : articleList) {
+//			int nowArticleId = article.getId();
+//			article.setCommentList(commentRepository.findByArticleId(nowArticleId));
+//		}
 
-		for (Article article : articleList) {
-			int nowArticleId = article.getId();
-			article.setCommentList(commentRepository.findByArticleId(nowArticleId));
-		}
-
+		List<Article> articleList = articleRepository.findAllArticleAndComment();
+				
 		model.addAttribute("articleList", articleList);
 
 		return "article";
@@ -110,9 +112,9 @@ public class ArticleController {
 		// 記事ID
 		Integer articleId = id;
 		// コメント削除
-		commentRepository.deleteById(articleId);
+		commentRepository.deleteByArticleId(articleId);
 		// 記事削除
-		articleRepository.deleteByArticleId(id);
+		articleRepository.deleteById(id);
 
 		return "redirect:/";
 	}

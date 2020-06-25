@@ -51,8 +51,9 @@
 
 		<br>
 		
-		<!-- コメント削除ok -->
+		<!-- 記事・コメント削除 -->
 		<form th:action="@{/deleteArticle?id=}+${article.id}" method="post">
+		
 			<button type="submit">記事削除</button>
 		</form>
 	</div>

@@ -27,6 +27,14 @@ public class Article {
 	 */
 	private List<Comment> commentList;
 
+	public Article(Integer id, String name, String content, List<Comment> commentList) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.content = content;
+		this.commentList = commentList;
+	}
+
 	public Article(Integer id, String name, String content) {
 		super();
 		this.id = id;
@@ -34,7 +42,7 @@ public class Article {
 		this.content = content;
 	}
 
-	public Article( String name, String content) {
+	public Article(String name, String content) {
 		super();
 		this.name = name;
 		this.content = content;
