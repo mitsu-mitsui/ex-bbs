@@ -68,13 +68,16 @@ public class ArticleController {
 	 * @return 掲示板画面
 	 */
 	@RequestMapping("/insertArticle")
-	public String insertArticle(ArticleForm form) {
+	public String insertArticle(ArticleForm form, Model model) {
 		Article article = new Article();
 		BeanUtils.copyProperties(form, article);
-		
-		articleRepository.Insert(article);
 
-		
+		if ("".equals(article.getName()) || "".equals(article.getContent())) {
+			
+		} else {
+			articleRepository.Insert(article);
+		}
+
 		return "redirect:/";
 	}
 
@@ -88,22 +91,29 @@ public class ArticleController {
 	public String insertComment(CommentForm form) {
 		Comment comment = new Comment();
 		BeanUtils.copyProperties(form, comment);
-		
+
 		comment.setArticleId(Integer.parseInt(form.getArticleId()));
 
 		commentRepository.insert(comment);
 
 		return "redirect:/";
 	}
-	
+
+	/**
+	 * 記事とそのコメントを削除する．
+	 * 
+	 * @param id 記事ID
+	 * @return 掲示板画面
+	 */
 	@RequestMapping("/deleteArticle")
 	public String deleteArticle(Integer id) {
-		//記事ID
+		// 記事ID
 		Integer articleId = id;
-		
-		//コメントを削除します
+		// コメント削除
 		commentRepository.deleteById(articleId);
-		
+		// 記事削除
+		articleRepository.deleteByArticleId(id);
+
 		return "redirect:/";
 	}
 
