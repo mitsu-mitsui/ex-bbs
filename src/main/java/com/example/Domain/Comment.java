@@ -1,12 +1,9 @@
 package com.example.Domain;
 
 /**
+ * 
  * コメントドメイン．
  * 
- * @author yuiko.mitsui
- *
- */
-/**
  * @author yuiko.mitsui
  *
  */

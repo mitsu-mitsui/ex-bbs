@@ -2,6 +2,7 @@ package com.example.Controller;
 
 import java.util.List;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.Domain.Article;
 import com.example.Domain.Comment;
+import com.example.Form.ArticleForm;
 import com.example.Form.CommentForm;
 import com.example.Repository.ArticleRepository;
 import com.example.Repository.CommentRepository;
@@ -25,11 +27,17 @@ public class ArticleController {
 	private ArticleRepository articleRepository;
 	@Autowired
 	private CommentRepository commentRepository;
+
 	@Autowired
 	public CommentForm setupCommentForm() {
 		return new CommentForm();
 	}
-	
+
+	@Autowired
+	public ArticleForm setupArticleForm() {
+		return new ArticleForm();
+	}
+
 	/**
 	 * 掲示板画面に遷移．
 	 * 
@@ -60,10 +68,13 @@ public class ArticleController {
 	 * @return 掲示板画面
 	 */
 	@RequestMapping("/insertArticle")
-	public String insertArticle(String name, String content) {
+	public String insertArticle(ArticleForm form) {
+		Article article = new Article();
+		BeanUtils.copyProperties(form, article);
+		
+		articleRepository.Insert(article);
 
-		articleRepository.Insert(new Article(name, content));
-
+		
 		return "redirect:/";
 	}
 
@@ -76,12 +87,22 @@ public class ArticleController {
 	@RequestMapping("/insertComment")
 	public String insertComment(CommentForm form) {
 		Comment comment = new Comment();
+		BeanUtils.copyProperties(form, comment);
 		
-		comment.setContent(form.getContent());
-		comment.setName(form.getName());
 		comment.setArticleId(Integer.parseInt(form.getArticleId()));
-		
+
 		commentRepository.insert(comment);
+
+		return "redirect:/";
+	}
+	
+	@RequestMapping("/deleteArticle")
+	public String deleteArticle(Integer id) {
+		//記事ID
+		Integer articleId = id;
+		
+		//コメントを削除します
+		commentRepository.deleteById(articleId);
 		
 		return "redirect:/";
 	}

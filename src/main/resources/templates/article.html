@@ -9,43 +9,52 @@
 <body>
 
 	<!-- 投稿フォーム -->
-	<form th:action="@{/insertArticle}" th:method="post">
-	投稿者名：<input name="name" type="text"><br>
-	投稿内容：<textarea name="content" rows="5" cols="30"></textarea><br><br>
-	<button type="submit">記事投稿</button>
+	<form th:action="@{/insertArticle}" method="post">
+		投稿者名：<input name="name" type="text"><br> 投稿内容：
+		<textarea name="content" rows="5" cols="30"></textarea>
+		<br> <br>
+		<button type="submit">記事投稿</button>
 	</form>
-	
+
 
 	<div th:each=" article : ${articleList}">
 		<hr>
 		<!-- 投稿表示欄 -->
-		投稿者名：<span th:text="${article.name}">ななし</span><br> 投稿内容：<br>
+		投稿者名：<span th:text="${article.name}">ななし</span><br> 
+		投稿内容：<br>
 		<pre th:text="${article.content}">hoge</pre>
 		<br>
-		
+
 		<!-- コメント表示欄 -->
 		<div th:each="comment : ${article.commentList}">
-		------------------------<br>
-		コメント者名：<span th:text="${comment.name}">ななしさん</span><br>
-		コメント：<br>
-		<pre th:text="${comment.content}">huga</pre><br>
-		
+			------------------------<br> 
+			コメント者名：
+			<span th:text="${comment.name}">ななしさん</span><br> 
+			コメント：<br>
+			<pre th:text="${comment.content}">huga</pre>
+			<br>
+
 		</div>
-		
+
 		<!-- コメント投稿欄 -->
 		------------------------<br>
 		<form th:action="@{/insertComment}" method="post">
-		<input name="articleId" type="hidden" th:value="${article.id}">
-		名前：<input name="name" type="text"><br>
-	    コメント：<br>
-	    <textarea name="content" rows="5" cols="30"></textarea><br>
-	    
-	    <button type="submit">コメント投稿</button>
-		
+			<input name="articleId" type="hidden" th:value="${article.id}">
+			名前：<input name="name" type="text"><br> 
+			コメント：<br>
+			<textarea name="content" rows="5" cols="30"></textarea>
+			<br>
+
+			<button type="submit">コメント投稿</button>
+
 		</form>
-		
+
 		<br>
-		<button type="button">記事削除</button>
+		
+		<!-- コメント削除ok -->
+		<form th:action="@{/deleteArticle?id=}+${article.id}" method="post">
+			<button type="submit">記事削除</button>
+		</form>
 	</div>
 
 </body>
