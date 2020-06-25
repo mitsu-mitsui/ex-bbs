@@ -7,7 +7,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
@@ -69,7 +68,7 @@ public class ArticleRepository {
 					boolean isExist = false;
 					int existNum = -1;
 
-					for (int i = 0; i < list.size(); i++) {
+					for (int i = 0; i < list.size(); i++) {//記事の既出判定
 						if (list.get(i).getId() == article.getId()) {
 							isExist = true;
 							existNum = i;
@@ -77,28 +76,28 @@ public class ArticleRepository {
 					}
 
 					if (isExist) {// 既出記事
-
+						
+						if(list.get(existNum).getCommentList() == null) {
+							article.setCommentList(new ArrayList<Comment>());
+						}
+						
 						if (comment.getId() != null) {// コメント有
-							System.out.println("既出・有ーーーーーー");
-							System.out.println("existId:"+existNum);
 							list.get(existNum).getCommentList().add(comment);
-							System.out.println("既出・有(終)ーーーー");
 						}
 
 					} else {// 新規記事
-						System.out.println("新規ーーーー");
-						article.setCommentList(new ArrayList<Comment>());
 
-						if (comment.getId() != null) {// コメント有
-							System.out.println("新規・有ーーーー");
+						if (comment.getId() != 0) {// コメント有
+							article.setCommentList(new ArrayList<Comment>());
 							article.getCommentList().add(comment);
-							System.out.println("新規・有（終）ーーーー");
+						}else {
+							article.setCommentList(null);
 						}
-						System.out.println("新規addーーーー");
+						
 						list.add(article);
 					}
 				}
-				
+
 				return list;
 			}
 		});
@@ -145,4 +144,5 @@ public class ArticleRepository {
 		template.update(sql, param);
 
 	}
+	
 }
